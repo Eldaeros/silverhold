@@ -11,6 +11,7 @@ import {
 import ArticleCard from '../components/ArticleCard';
 import posts from '../data/blog-posts';
 import { shevy } from '../components/CoreComponents';
+import { device } from '../styles/media';
 
 const Background = styled.div`
     background-color: #101010;
@@ -64,6 +65,7 @@ const TitleContainer = styled.div`
         ${Title} {
             ${shevy.h1};
             margin: 32px 32px 8px 32px;
+            text-align: center;
         }
 
         ${AuthorText} {
@@ -108,6 +110,15 @@ const TitleContainer = styled.div`
         ${ButtonContainer} {
             > * {
                 margin: 0px 8px;
+            }
+
+            @media ${device.tablet} {
+                display: flex;
+                flex-direction: column;
+                > * {
+                    margin: 8px 0px;
+                    width: 180px;
+                }
             }
         }
     }
