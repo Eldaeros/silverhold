@@ -2,10 +2,9 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { CssBaseline, Button } from '@material-ui/core';
 
-import ArticleCard from '../components/ArticleCard';
 import posts from '../data/blog-posts';
-import { shevy } from '../components/CoreComponents';
 import { media } from '../styles/media';
+import { useTypography } from '../libs/useTypography';
 
 const Background = styled.div`
     background-color: #101010;
@@ -57,14 +56,14 @@ const TitleContainer = styled.div`
 
     ${Header} {
         ${Title} {
-            ${shevy.h1};
+            ${({ typography }) => typography.verticalRhythm({ fontScale: 9 })}
             margin: 32px 32px 8px 32px;
             text-align: center;
         }
 
         ${AuthorText} {
-            ${shevy.h6};
-            margin-bottom: 0px;
+            ${({ typography }) => typography.verticalRhythm({ fontScale: 2 })}
+            margin: 0px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
                 sans-serif;
@@ -106,7 +105,7 @@ const TitleContainer = styled.div`
                 margin: 0px 8px;
             }
 
-            ${media.mobile} {
+            ${media.small} {
                 display: flex;
                 flex-direction: column;
                 > * {
@@ -133,6 +132,8 @@ const StyledButton = styled(Button)`
 `;
 
 const Index = () => {
+    const typography = useTypography();
+
     const blogsRef = useRef();
 
     const handleScrollTo = (elRef) => {
@@ -150,7 +151,7 @@ const Index = () => {
         <Background>
             <CssBaseline />
             <SplashImage image={'/images/lion.jpg'}>
-                <TitleContainer>
+                <TitleContainer typography={typography}>
                     <Header>
                         <Title>SILVERHOLD STUDIOS</Title>
                         <AuthorText>

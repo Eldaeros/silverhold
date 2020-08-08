@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
 import '../styles/fonts.css';
-import { size as media } from '../styles/media';
+import { size } from '../styles/media';
 import { useWindowSize } from '../libs/useWindowResize';
 
-export const SizeContext = React.createContext('laptop');
+export const SizeContext = React.createContext('standard');
 
 const MyApp = ({ Component, pageProps }) => {
-    const size = useWindowSize();
-    const [mediaSize, setMediaSize] = useState('laptop');
+    const windowSize = useWindowSize();
+    const [mediaSize, setMediaSize] = useState('standard');
 
     useEffect(() => {
-        if (size.width < media.mobile) {
-            setMediaSize('mobile');
-        } else if (size.width < media.laptop) {
-            setMediaSize('laptop');
+        if (windowSize.width < size.standard) {
+            setMediaSize('small');
+        } else if (windowSize.width < size.wide) {
+            setMediaSize('standard');
         } else {
-            setMediaSize('desktop');
+            setMediaSize('wide');
         }
-    }, [size]);
+    }, [windowSize]);
 
     useEffect(() => {
         // Remove the server-side injected CSS.

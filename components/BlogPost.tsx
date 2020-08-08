@@ -27,27 +27,24 @@ const BlogPost = (props: BlogPostProps) => {
 
     const typography = useTypography();
 
+    const debugMode = false;
     const BlogContainer = styled(Container)`
-        /* background-position: -1px -1px;
+        ${debugMode
+            ? `background-position: -1px -1px;
         background-image: linear-gradient(
-                to right,
-                rgba(50, 50, 100, 0.25) 1px,
-                transparent 1px
-            ),
-            linear-gradient(rgba(50, 50, 100, 0.25) 1px, transparent 1px);
-        background-size: ${typography.rhythmHeight(
-            1
-        )} ${typography.rhythmHeight(1)}; */
+            rgba(50, 50, 100, 0.25) 1px,
+            transparent 1px
+        );
+        background-size: 1px ${typography.rhythmHeight(1)};`
+            : ``}
 
         p {
-            ${typography.rhythmCss(2)}
-            margin-block-start: ${typography.rhythmHeight(1)};
-            margin-block-end: ${typography.rhythmHeight(1)};
+            ${typography.verticalRhythm({ fontScale: 2 })}
 
             code {
-                ${typography.rhythmCss(1)}
+                ${typography.verticalRhythm({ fontScale: 1 })}
                 display: inline-block;
-                margin-bottom: -1px;
+                margin-bottom: 0px;
             }
         }
 
@@ -55,44 +52,48 @@ const BlogPost = (props: BlogPostProps) => {
             min-height: ${typography.rhythmHeight(2)};
             background-color: lightgray;
             overflow: hidden;
+            margin: ${typography.rhythmHeight(0.5)} 0;
+            box-sizing: content-box;
             code {
-                ${typography.rhythmCss(1)}
+                ${typography.verticalRhythm({
+                    fontScale: 1
+                })}
+                margin: 0;
+                margin-left: ${typography.rhythmHeight(1)};
+                padding: ${typography.rhythmHeight(0.5)} 0;
                 display: inline-block;
                 position: absolute;
-                padding: ${typography.rhythmHeight(
-                    0.5
-                )} ${typography.rhythmHeight(1)};
             }
         }
 
-
         a {
-            ${typography.rhythmCss(2)}
+            ${typography.verticalRhythm({ fontScale: 2 })}
         }
 
         ul {
-            margin: 0px;
-            /* margin-block-start: ${typography.rhythmHeight(1)}; */
-            margin-block-end: ${typography.rhythmHeight(1)};
+            ${typography.verticalRhythm({ fontScale: 2 })}
+            margin-top: 0;
+            margin-bottom: ${typography.rhythmHeight(1)};
+
             li {
-                ${typography.rhythmCss(2)}
+                ${typography.verticalRhythm({ fontScale: 2 })}
+                margin: 0;
             }
         }
 
         ol {
-            ${typography.rhythmCss(2)}
-            /* margin-block-start: ${typography.rhythmHeight(1)}; */
-            margin-block-end: ${typography.rhythmHeight(1)};
+            ${typography.verticalRhythm({ fontScale: 2 })}
         }
 
         blockquote {
-            ${typography.rhythmCss(2)}
-            margin-block-start: ${typography.rhythmHeight(0.5)};
-            margin-block-end: ${typography.rhythmHeight(0.5)};
+            ${typography.verticalRhythm({ fontScale: 2 })}
+            & > * {
+                margin-left: ${typography.rhythmHeight(1)};
+            }
         }
 
         pre {
-            line-height: calc(1.85 * ${typography.rhythm.getBaseFontSize()}em) ;
+            line-height: calc(1.85 * ${typography.rhythm.getBaseFontSize()}em);
             margin: 0px;
         }
 
@@ -101,24 +102,22 @@ const BlogPost = (props: BlogPostProps) => {
         }
 
         h1 {
-            ${typography.rhythmCss(6)}
-            padding-bottom: 1px;
+            ${typography.verticalRhythm({ fontScale: 6 })}
         }
         h2 {
-            ${typography.rhythmCss(5)}
+            ${typography.verticalRhythm({ fontScale: 5 })}
         }
         h3 {
-            ${typography.rhythmCss(4)}
-            padding-bottom: 1px;
+            ${typography.verticalRhythm({ fontScale: 4 })}
         }
         h4 {
-            ${typography.rhythmCss(3)}
+            ${typography.verticalRhythm({ fontScale: 3 })}
         }
         h5 {
-            ${typography.rhythmCss(2)}
+            ${typography.verticalRhythm({ fontScale: 2 })}
         }
         h6 {
-            ${typography.rhythmCss(1)}
+            ${typography.verticalRhythm({ fontScale: 1 })}
         }
     `;
 

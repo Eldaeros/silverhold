@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { lineHeightSpacing, baseSpacing } from './Typography';
 import styled, { css } from 'styled-components';
 import { useWindowSize } from '../libs/useWindowResize';
-import { getBaseFontSize } from '../libs/rhythm';
+import { getBaseFontSize, RhythmTypography } from '../libs/rhythm';
+import { useTypography } from '../libs/useTypography';
 
 interface ImageProps extends React.ImgHTMLAttributes<any> {}
 const RhythmImage = (props: ImageProps) => {
-    const rhythmnHeight = parseFloat(lineHeightSpacing(1));
+    const typography = useTypography();
+
+    const rhythmnHeight = typography.rhythmHeightValue(1);
+    // const rhythmnHeight = getRhythmUnit(1);
     const size = useWindowSize();
     const [imageHeight, setimageHeight] = useState<number | undefined>();
 
@@ -34,13 +37,17 @@ const RhythmImage = (props: ImageProps) => {
 
 interface ImageContainerProps {
     height?: number;
+    typography?: RhythmTypography;
 }
 const ImageContainer = styled.div`
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: ${baseSpacing(1)};
+    ${(props: ImageContainerProps) =>
+        props.typography
+            ? `margin-bottom: ${props.typography.rhythmHeight(1)};`
+            : ``};
     ${(props: ImageContainerProps) =>
         props.height ? `height: ${props.height}px;` : ``}
 `;

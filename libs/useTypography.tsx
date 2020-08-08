@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SizeContext } from '../pages/_app';
-import { Typography } from '../styles/typography';
+import { RhythmTypography } from './rhythm';
 
 export const useTypography = () => {
-    const sizeContext = useContext(SizeContext);
-    const [typography, setTypography] = useState(new Typography());
+    const mediaSize = useContext(SizeContext);
+    const [typography, setTypography] = useState(new RhythmTypography());
     useEffect(() => {
-        switch (sizeContext) {
-            case 'mobile':
-            case 'laptop':
+        switch (mediaSize) {
+            case 'small':
+            case 'standard':
                 setTypography(
-                    new Typography({
+                    new RhythmTypography({
                         baseFontSize: 1,
                         baseLineHeight: 2,
                         baseFontScale: 'minorThird'
                     })
                 );
                 break;
-            case 'desktop':
+            case 'wide':
                 setTypography(
-                    new Typography({
+                    new RhythmTypography({
                         baseFontSize: 1,
                         baseLineHeight: 2.5,
                         baseFontScale: 'majorThird'
@@ -28,7 +28,7 @@ export const useTypography = () => {
             default:
                 break;
         }
-    }, [sizeContext]);
+    }, [mediaSize]);
 
     return typography;
 };

@@ -1,11 +1,11 @@
 export const size = {
-    mobile: 768,
-    laptop: 1440,
-    desktop: 2560
+    small: 768,
+    standard: 992,
+    wide: 1200
 };
 
 export const media = {
-    mobile: `@media (max-width: ${size.mobile}px)`,
-    laptop: `@media (max-width: ${size.laptop}px)`,
-    desktop: `@media (max-width: ${size.desktop}px)`
+    small: `@media (max-width: ${size.small}px)`,
+    standard: `@media (max-width: ${size.standard}px)`,
+    wide: `@media (max-width: ${size.wide}px)`
 };

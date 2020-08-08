@@ -1043,6 +1043,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@ceteio/styled-components-rhythm@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ceteio/styled-components-rhythm/-/styled-components-rhythm-2.0.1.tgz#8f3455c3e0c3fedb2bd160a2c6ef227a931a355a"
+  integrity sha1-jzRVw+DD/tsr0WCixu8iepMaNVo=
+
 "@emotion/hash@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"

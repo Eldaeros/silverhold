@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 const defaults: RhythmOptions = {
     baseFontSize: 1,
-    baseLineHeight: 2,
+    baseLineHeight: 1.5,
     baseFontScale: 'minorThird'
 };
 
@@ -31,7 +31,7 @@ export class Rhythm {
         return this.baseFontSize;
     };
 
-    getRhythmUnit = (scaleMultiplier: number) => {
+    getRhythmUnit = (scaleMultiplier: number = 1) => {
         return this.rhythmUnit * scaleMultiplier;
     };
 
@@ -49,13 +49,7 @@ export class Rhythm {
         return fontSize;
     };
 
-    getFontSizeStyle = (scaleIndex: number = 0) => {
-        return css`
-            font-size: ${this.fontSizeNumber(scaleIndex)}rem;
-        `;
-    };
-
-    getLineHeightStyle = (scaleIndex: number = 0) => {
+    getLineHeight = (scaleIndex: number = 0) => {
         const fontSize = this.fontSizeNumber(scaleIndex);
         const calculateLineHeight = (rhythmHeight: number) => {
             return (this.rhythmUnit * rhythmHeight) / fontSize;
@@ -70,9 +64,52 @@ export class Rhythm {
             lineHeight = calculateLineHeight(targetRhythmHeight);
         }
 
+        return lineHeight;
+    };
+
+    // Style (CSS) functions
+
+    getStyleFontSize = (scaleIndex: number = 0) => {
         return css`
-            line-height: ${lineHeight};
+            font-size: ${this.fontSizeNumber(scaleIndex)}rem;
         `;
+    };
+
+    getStyleLineHeight = (scaleIndex: number = 0) => {
+        let lineHeight = this.getLineHeight(scaleIndex);
+        return css`
+            line-height: ${lineHeight}em;
+        `;
+    };
+}
+
+export class RhythmTypography {
+    rhythm: Rhythm = new Rhythm();
+    constructor(options?: RhythmOptions) {
+        this.rhythm = new Rhythm(options);
+    }
+
+    verticalRhythm = (options: { fontScale: number; height?: number }) => {
+        return css`
+            ${this.rhythm.getStyleFontSize(options.fontScale)};
+            ${this.rhythm.getStyleLineHeight(
+                options.height || options.fontScale
+            )};
+            margin: ${this.rhythmHeight(1)} 0;
+        `;
+    };
+
+    rhythmHeight = (scale: number) => {
+        const calc = `calc(${this.rhythm.getRhythmUnit(
+            scale
+        )} * ${this.rhythm.getBaseFontSize()}rem)`;
+        return css`
+            ${calc}
+        `;
+    };
+
+    rhythmHeightValue = (scale: number): number => {
+        return this.rhythm.getRhythmUnit(scale) * this.rhythm.getBaseFontSize();
     };
 }
 

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useWindowSize } from '../libs/useWindowResize';
-import { getBaseFontSize } from '../libs/rhythm';
+import { getBaseFontSize, RhythmTypography } from '../libs/rhythm';
 import { useTypography } from '../libs/useTypography';
-import { Typography } from '../styles/typography';
 
 interface CodeBlockProps {
     children: JSX.Element;
@@ -41,7 +40,7 @@ const RhythmCodeBlock = (props: CodeBlockProps) => {
 };
 
 interface CodeContainerProps {
-    typography?: Typography;
+    typography?: RhythmTypography;
     height?: number;
 }
 const CodeContainer = styled.div`
