@@ -7,9 +7,7 @@ banner: /images/niki.jpg
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Vitae ultricies leo integer malesuada. Purus sit amet luctus venenatis lectus. Vitae sapien pellentesque habitant morbi. Quisque sagittis purus sit amet volutpat consequat mauris nunc congue. Nulla aliquet enim tortor at. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. At volutpat diam ut venenatis tellus in. Id consectetur purus ut faucibus. Sit amet porttitor eget dolor morbi non. Ut ornare lectus sit amet est placerat in. Amet justo donec enim diam vulputate ut. Feugiat vivamus at augue eget arcu dictum varius. In mollis nunc sed id semper risus in hendrerit. Posuere morbi leo urna molestie at elementum eu facilisis sed. Pretium viverra suspendisse potenti nullam ac. Et ultrices neque ornare aenean. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Aliquam vestibulum morbi blandit cursus risus at.
 
-```
 Adipiscing at in tellus integer feugiat scelerisque. Eu lobortis elementum nibh tellus molestie nunc non blandit. Dui faucibus in ornare quam viverra orci sagittis. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Ut sem viverra aliquet eget sit. Metus vulputate eu scelerisque felis imperdiet. Nec tincidunt praesent semper feugiat nibh sed. Eget arcu dictum varius duis at consectetur. Purus ut faucibus pulvinar elementum integer. Orci ac auctor augue mauris augue neque gravida in. Duis ultricies lacus sed turpis tincidunt id. Volutpat lacus laoreet non curabitur gravida.
-```
 
 ![](/images/cat.jpg)
 

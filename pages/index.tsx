@@ -1,17 +1,11 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import {
-    CssBaseline,
-    Grid,
-    Container,
-    darken,
-    Button
-} from '@material-ui/core';
+import { CssBaseline, Button } from '@material-ui/core';
 
 import ArticleCard from '../components/ArticleCard';
 import posts from '../data/blog-posts';
 import { shevy } from '../components/CoreComponents';
-import { device } from '../styles/media';
+import { media } from '../styles/media';
 
 const Background = styled.div`
     background-color: #101010;
@@ -112,7 +106,7 @@ const TitleContainer = styled.div`
                 margin: 0px 8px;
             }
 
-            @media ${device.tablet} {
+            ${media.mobile} {
                 display: flex;
                 flex-direction: column;
                 > * {

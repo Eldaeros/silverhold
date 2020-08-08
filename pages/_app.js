@@ -1,14 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
-import { ThemeProvider } from 'styled-components';
+import '../styles/fonts.css';
+import { size as media } from '../styles/media';
+import { useWindowSize } from '../libs/useWindowResize';
 
-const theme = {
-    colors: {
-        primary: '#0070f3'
-    }
-};
+export const SizeContext = React.createContext('laptop');
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
+    const size = useWindowSize();
+    const [mediaSize, setMediaSize] = useState('laptop');
+
+    useEffect(() => {
+        if (size.width < media.mobile) {
+            setMediaSize('mobile');
+        } else if (size.width < media.laptop) {
+            setMediaSize('laptop');
+        } else {
+            setMediaSize('desktop');
+        }
+    }, [size]);
+
     useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
@@ -18,10 +29,10 @@ function MyApp({ Component, pageProps }) {
     }, []);
 
     return (
-        <ThemeProvider theme={theme}>
+        <SizeContext.Provider value={mediaSize}>
             <Component {...pageProps} />
-        </ThemeProvider>
+        </SizeContext.Provider>
     );
-}
+};
 
 export default MyApp;
