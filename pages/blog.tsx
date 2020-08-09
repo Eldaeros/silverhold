@@ -12,7 +12,7 @@ interface BlogProps {
     children: JSX.Element | JSX.Element[];
 }
 const Blog = (props: BlogProps) => {
-    const current = posts.map(({ title }) => title).indexOf(props.meta.title);
+    const current = posts.map(({ title }) => title).indexOf(props.meta?.title);
     const next = posts[current - 1];
     const prev = posts[current + 1];
 
@@ -26,14 +26,14 @@ const Blog = (props: BlogProps) => {
     }, []);
 
     useEffect(() => {
-        document.title = 'Silverhold Studios - ' + props.meta.title;
+        document.title = 'Silverhold Studios - ' + props.meta?.title;
     }, []);
 
     return (
         <>
             <Container maxWidth="md">
                 <StyleWrapper>
-                    <h1>{props.meta.title}</h1>
+                    <h1>{props.meta?.title}</h1>
                     {children}
                     <div>
                         <div>
