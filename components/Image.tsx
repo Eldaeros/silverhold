@@ -9,14 +9,13 @@ interface ImageProps extends React.ImgHTMLAttributes<any> {}
 const RhythmImage = (props: ImageProps) => {
     const typography = useTypography();
 
-    const rhythmnHeight = typography.rhythmHeight(1);
-    // const rhythmnHeight = getRhythmUnit(1);
+    const rhythmnHeight = typography?.rhythmHeight(1);
     const size = useWindowSize();
     const [imageHeight, setimageHeight] = useState<number | undefined>();
 
     const imgRef = useRef();
     useEffect(() => {
-        if (imgRef.current) {
+        if (imgRef.current && typography) {
             const imageHeight = (imgRef.current as any).getBoundingClientRect()
                 .height;
             const baseFontSize = getBaseFontSize();
@@ -27,8 +26,11 @@ const RhythmImage = (props: ImageProps) => {
 
             setimageHeight(calculatedHeight);
         }
-    }, [size]);
+    }, [size, typography]);
 
+    if (typography === undefined) {
+        return null;
+    }
     return (
         <>
             <ImageContainer height={imageHeight}>

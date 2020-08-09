@@ -10,13 +10,13 @@ interface CodeBlockProps {
 const RhythmCodeBlock = (props: CodeBlockProps) => {
     const typography = useTypography();
 
-    const rhythmnHeight = typography.rhythmHeight(1);
+    const rhythmnHeight = typography?.rhythmHeight(1);
     const size = useWindowSize();
     const [blockHeight, setBlockHeight] = useState<number | undefined>();
 
     const codeRef = useRef();
     useEffect(() => {
-        if (codeRef.current) {
+        if (codeRef.current && typography) {
             const blockHeight = (codeRef.current as any).firstElementChild
                 .firstElementChild.clientHeight;
             const baseFontSize = getBaseFontSize();
@@ -28,6 +28,9 @@ const RhythmCodeBlock = (props: CodeBlockProps) => {
         }
     });
 
+    if (typography === undefined) {
+        return null;
+    }
     return (
         <CodeContainer
             typography={typography}

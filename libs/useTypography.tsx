@@ -4,7 +4,7 @@ import { RhythmTypography } from './rhythm';
 
 export const useTypography = () => {
     const mediaSize = useContext(SizeContext);
-    const [typography, setTypography] = useState(new RhythmTypography());
+    const [typography, setTypography] = useState<RhythmTypography>();
     useEffect(() => {
         switch (mediaSize) {
             case 'small':

@@ -8,13 +8,14 @@ import RhythmCodeBlock from './CodeBlock';
 import { useTypography } from '../libs/useTypography';
 import styles from '../styles/base';
 import { RhythmTypography } from '../libs/rhythm';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
 interface BlogPostProps {
     meta: Omit<Post, 'path'>;
     children: JSX.Element | JSX.Element[];
 }
 const BlogPost = (props: BlogPostProps) => {
+    const typography = useTypography();
+
     const current = posts.map(({ title }) => title).indexOf(props.meta.title);
     const next = posts[current - 1];
     const prev = posts[current + 1];
@@ -31,9 +32,9 @@ const BlogPost = (props: BlogPostProps) => {
     useEffect(() => {
         document.title = 'Silverhold Studios - ' + props.meta.title;
     }, []);
-
-    const typography = useTypography();
-
+    if (typography === undefined) {
+        return null;
+    }
     return (
         <>
             <Container maxWidth="md">
