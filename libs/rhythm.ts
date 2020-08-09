@@ -1,5 +1,5 @@
-import { scales, ModularScale, ScaleKey } from './modularScale';
-import styled, { css } from 'styled-components';
+import { scales, ScaleKey } from './modularScale';
+import { css } from 'styled-components';
 
 const defaults: RhythmOptions = {
     baseFontSize: 1,
@@ -67,6 +67,10 @@ export class Rhythm {
         return lineHeight;
     };
 
+    getRhythmHeight = (scale: number): number => {
+        return this.getRhythmUnit(scale) * this.getBaseFontSize();
+    };
+
     // Style (CSS) functions
 
     getStyleFontSize = (scaleIndex: number = 0) => {
@@ -79,6 +83,15 @@ export class Rhythm {
         let lineHeight = this.getLineHeight(scaleIndex);
         return css`
             line-height: ${lineHeight}em;
+        `;
+    };
+
+    getStyleRhythmHeight = (scale: number) => {
+        const calc = `calc(${this.getRhythmUnit(
+            scale
+        )} * ${this.getBaseFontSize()}rem)`;
+        return css`
+            ${calc}
         `;
     };
 }
@@ -95,21 +108,12 @@ export class RhythmTypography {
             ${this.rhythm.getStyleLineHeight(
                 options.height || options.fontScale
             )};
-            margin: ${this.rhythmHeight(1)} 0;
+            margin: ${this.rhythm.getStyleRhythmHeight(1)} 0;
         `;
     };
 
     rhythmHeight = (scale: number) => {
-        const calc = `calc(${this.rhythm.getRhythmUnit(
-            scale
-        )} * ${this.rhythm.getBaseFontSize()}rem)`;
-        return css`
-            ${calc}
-        `;
-    };
-
-    rhythmHeightValue = (scale: number): number => {
-        return this.rhythm.getRhythmUnit(scale) * this.rhythm.getBaseFontSize();
+        return this.rhythm.getRhythmHeight(scale);
     };
 }
 

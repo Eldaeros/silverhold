@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import posts, { Post } from '../data/blog-posts';
-import { Container } from '@material-ui/core';
+import { Container, ContainerTypeMap } from '@material-ui/core';
 import RhythmImage from './Image';
 import styled, { css } from 'styled-components';
 import RhythmCodeBlock from './CodeBlock';
 
 import { useTypography } from '../libs/useTypography';
+import styles from '../styles/base';
+import { RhythmTypography } from '../libs/rhythm';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
 interface BlogPostProps {
     meta: Omit<Post, 'path'>;
@@ -21,142 +24,112 @@ const BlogPost = (props: BlogPostProps) => {
         let children = Array.isArray(props.children)
             ? props.children
             : [props.children];
-        children = childrenMapping(children);
+        children = mutateChildren(children);
         setChildren(children);
+    }, []);
+
+    useEffect(() => {
+        document.title = 'Silverhold Studios - ' + props.meta.title;
     }, []);
 
     const typography = useTypography();
 
-    const debugMode = false;
-    const BlogContainer = styled(Container)`
-        ${debugMode
-            ? `background-position: -1px -1px;
-        background-image: linear-gradient(
-            rgba(50, 50, 100, 0.25) 1px,
-            transparent 1px
-        );
-        background-size: 1px ${typography.rhythmHeight(1)};`
-            : ``}
-
-        p {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-
-            code {
-                ${typography.verticalRhythm({ fontScale: 1 })}
-                display: inline-block;
-                margin-bottom: 0px;
-            }
-        }
-
-        pre {
-            min-height: ${typography.rhythmHeight(2)};
-            background-color: lightgray;
-            overflow: hidden;
-            margin: ${typography.rhythmHeight(0.5)} 0;
-            box-sizing: content-box;
-            code {
-                ${typography.verticalRhythm({
-                    fontScale: 1
-                })}
-                margin: 0;
-                margin-left: ${typography.rhythmHeight(1)};
-                padding: ${typography.rhythmHeight(0.5)} 0;
-                display: inline-block;
-                position: absolute;
-            }
-        }
-
-        a {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-        }
-
-        ul {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-            margin-top: 0;
-            margin-bottom: ${typography.rhythmHeight(1)};
-
-            li {
-                ${typography.verticalRhythm({ fontScale: 2 })}
-                margin: 0;
-            }
-        }
-
-        ol {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-        }
-
-        blockquote {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-            & > * {
-                margin-left: ${typography.rhythmHeight(1)};
-            }
-        }
-
-        pre {
-            line-height: calc(1.85 * ${typography.rhythm.getBaseFontSize()}em);
-            margin: 0px;
-        }
-
-        img {
-            width: 100%;
-        }
-
-        h1 {
-            ${typography.verticalRhythm({ fontScale: 6 })}
-        }
-        h2 {
-            ${typography.verticalRhythm({ fontScale: 5 })}
-        }
-        h3 {
-            ${typography.verticalRhythm({ fontScale: 4 })}
-        }
-        h4 {
-            ${typography.verticalRhythm({ fontScale: 3 })}
-        }
-        h5 {
-            ${typography.verticalRhythm({ fontScale: 2 })}
-        }
-        h6 {
-            ${typography.verticalRhythm({ fontScale: 1 })}
-        }
-    `;
-
     return (
         <>
-            <BlogContainer maxWidth="md">
-                <h1>{props.meta.title}</h1>
-                {children}
-                <hr />
-                <div>
+            <Container maxWidth="md">
+                <StyleWrapper rhythmTypography={typography}>
+                    <h1>{props.meta.title}</h1>
+                    {children}
+                    <hr />
                     <div>
-                        {prev && (
-                            <PostNavigation
-                                href={prev.path}
-                                position="< Previous post"
-                                title={prev.title}
-                            />
-                        )}
+                        <div>
+                            {prev && (
+                                <PostNavigation
+                                    href={prev.path}
+                                    position="< Previous post"
+                                    title={prev.title}
+                                />
+                            )}
+                        </div>
+                        <div>
+                            {next && (
+                                <PostNavigation
+                                    href={next.path}
+                                    position="Next post >"
+                                    title={next.title}
+                                />
+                            )}
+                        </div>
                     </div>
-                    <div>
-                        {next && (
-                            <PostNavigation
-                                href={next.path}
-                                position="Next post >"
-                                title={next.title}
-                            />
-                        )}
-                    </div>
-                </div>
-            </BlogContainer>
+                </StyleWrapper>
+            </Container>
         </>
     );
 };
 
-const childrenMapping = (children: any, level: number = 0) => {
+interface StyleWrapperProps {
+    rhythmTypography: RhythmTypography;
+}
+const StyleWrapper = styled.div`
+    background-position: -1px -1px;
+    background-image: linear-gradient(
+        rgba(50, 50, 100, 0.25) 1px,
+        transparent 1px
+    );
+    background-size: 1px
+        ${(props: StyleWrapperProps) => props.rhythmTypography.rhythmHeight(1)};
+
+    p {
+        ${(props: StyleWrapperProps) =>
+            styles.paragraph(props.rhythmTypography)}
+    }
+    pre {
+        ${(props: StyleWrapperProps) =>
+            styles.preformatted(props.rhythmTypography)}
+    }
+    a {
+        ${(props: StyleWrapperProps) => styles.anchor(props.rhythmTypography)}
+    }
+    ul,
+    ol {
+        ${(props: StyleWrapperProps) => styles.list(props.rhythmTypography)}
+    }
+    blockquote {
+        ${(props: StyleWrapperProps) =>
+            styles.blockquote(props.rhythmTypography)}
+    }
+    image {
+        ${(props: StyleWrapperProps) => styles.image(props.rhythmTypography)}
+    }
+    h1 {
+        ${(props: StyleWrapperProps) => styles.H1(props.rhythmTypography)}
+    }
+    h2 {
+        ${(props: StyleWrapperProps) => styles.H2(props.rhythmTypography)}
+    }
+    h3 {
+        ${(props: StyleWrapperProps) => styles.H3(props.rhythmTypography)}
+    }
+    h4 {
+        ${(props: StyleWrapperProps) => styles.H4(props.rhythmTypography)}
+    }
+    h5 {
+        ${(props: StyleWrapperProps) => styles.H5(props.rhythmTypography)}
+    }
+    h6 {
+        ${(props: StyleWrapperProps) => styles.H6(props.rhythmTypography)}
+    }
+`;
+
+const mutateChildren = (children: any, level: number = 0) => {
     return children.map((child, i) => {
         const descendants = child?.props?.children;
         if (descendants?.props?.mdxType === 'img') {
-            child = <RhythmImage key={i} src={descendants.props.src} />;
+            const imgProps = { ...descendants.props };
+            delete imgProps.parentName;
+            delete imgProps.originalType;
+            delete imgProps.mdxType;
+            child = <RhythmImage key={i} {...imgProps} />;
         } else if (child?.props?.mdxType === 'pre') {
             child = <RhythmCodeBlock key={i}>{child}</RhythmCodeBlock>;
         }

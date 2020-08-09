@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
 import '../styles/fonts.css';
+import '../styles/normalize.css';
 import { size } from '../styles/media';
 import { useWindowSize } from '../libs/useWindowResize';
 
 export const SizeContext = React.createContext('standard');
 
-const MyApp = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
     const windowSize = useWindowSize();
     const [mediaSize, setMediaSize] = useState('standard');
 
@@ -35,4 +36,4 @@ const MyApp = ({ Component, pageProps }) => {
     );
 };
 
-export default MyApp;
+export default App;

@@ -10,7 +10,7 @@ interface CodeBlockProps {
 const RhythmCodeBlock = (props: CodeBlockProps) => {
     const typography = useTypography();
 
-    const rhythmnHeight = typography.rhythmHeightValue(1);
+    const rhythmnHeight = typography.rhythmHeight(1);
     const size = useWindowSize();
     const [blockHeight, setBlockHeight] = useState<number | undefined>();
 
