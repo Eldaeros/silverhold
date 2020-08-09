@@ -1,43 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useWindowSize } from '../libs/useWindowResize';
-import { getBaseFontSize, RhythmTypography } from '../libs/rhythm';
-import { useTypography } from '../libs/useTypography';
 import { content } from '../styles/blog';
 import { media } from '../styles/media';
+import { ThemeContext } from 'styled-components';
+import { getBaseFontSize } from '../libs/rhythm';
 
 interface ImageProps extends React.ImgHTMLAttributes<any> {}
 const RhythmImage = (props: ImageProps) => {
-    const typography = useTypography();
-
-    const rhythmnHeight = typography?.rhythmHeight(1);
+    const themeContext: { rhythmHeight: number } = useContext(ThemeContext);
     const size = useWindowSize();
     const [imageHeight, setimageHeight] = useState<number | undefined>();
 
     const imgRef = useRef();
     useEffect(() => {
-        if (imgRef.current && typography) {
+        if (imgRef.current) {
             const imageHeight = (imgRef.current as any).getBoundingClientRect()
                 .height;
             const baseFontSize = getBaseFontSize();
             const imageRhythmnHeight =
-                imageHeight / (rhythmnHeight * baseFontSize);
+                imageHeight / (themeContext.rhythmHeight * baseFontSize);
             const calculatedHeight =
-                Math.floor(imageRhythmnHeight) * rhythmnHeight * baseFontSize;
+                Math.floor(imageRhythmnHeight) *
+                themeContext.rhythmHeight *
+                baseFontSize;
 
             setimageHeight(calculatedHeight);
         }
-    }, [size, typography]);
+    }, [size]);
 
-    if (typography === undefined) {
-        return null;
-    }
     return (
         <>
             <ImageContainer height={imageHeight}>
                 <img ref={imgRef} {...props} />
             </ImageContainer>
-            <Description rhythmTypography={typography}>{props.alt}</Description>
+            <Description>{props.alt}</Description>
         </>
     );
 };
@@ -53,7 +50,6 @@ const Description = styled.div`
 
 interface ImageContainerProps {
     height?: number;
-    typography?: RhythmTypography;
 }
 const ImageContainer = styled.div`
     overflow: hidden;
@@ -61,10 +57,6 @@ const ImageContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    ${(props: ImageContainerProps) =>
-        props.typography
-            ? `margin-bottom: ${props.typography.rhythmHeight(1)};`
-            : ``};
     ${(props: ImageContainerProps) =>
         props.height ? `height: ${props.height}px;` : ``}
 `;

@@ -14,62 +14,59 @@ export const scale = {
         })
 };
 
-export const content = (modularScale: string) => css`
+const getScale = (ms, minor: number, major: number) => {
+    return ms === 'minorThird' ? minor : major;
+};
+
+export const content = (ms: string) => css`
     margin: 0;
     ${(props) =>
         props.theme.setFontWithRhythm(
             'Muli',
-            scale[modularScale](2),
-            modularScale === 'majorThird' ? 1.5 : undefined
+            scale[ms](2),
+            getScale(ms, 1, 1.5)
         )};
-    padding-bottom: ${(props) => props.theme.rhythmSizing(2)}rem;
+    padding-bottom: ${(props) =>
+        props.theme.rhythmSizing(getScale(ms, 2, 5))}rem;
 `;
 
-const styles = (modularScale: string) => css`
+const styles = (ms: string) => css`
     * {
         margin-top: 0;
+        color: rgba(57, 57, 57, 0.99);
     }
     h1 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](8))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](7))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
 
     h2 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](7))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](6))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h3 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](6))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](5))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h4 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](5))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](4))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h5 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](4))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](3))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h6 {
-        ${(props) =>
-            props.theme.setFontWithRhythm('Muli', scale[modularScale](3))}
+        ${(props) => props.theme.setFontWithRhythm('Muli', scale[ms](2))}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
 
     p {
-        ${content(modularScale)}
+        ${content(ms)}
 
         code {
             ${(props) =>
-                props.theme.setFontWithRhythm(
-                    'Fira Code',
-                    scale[modularScale](1)
-                )};
+                props.theme.setFontWithRhythm('Fira Code', scale[ms](1))};
             padding: 0;
             display: inline-block;
         }
@@ -84,10 +81,7 @@ const styles = (modularScale: string) => css`
         box-sizing: content-box;
         code {
             ${(props) =>
-                props.theme.setFontWithRhythm(
-                    'Fira Code',
-                    scale[modularScale](1)
-                )};
+                props.theme.setFontWithRhythm('Fira Code', scale[ms](1))};
             margin-left: ${(props) => props.theme.rhythmSizing(2)}rem;
             padding: ${(props) => props.theme.rhythmSizing(2)}rem 0;
             display: inline-block;
@@ -96,12 +90,12 @@ const styles = (modularScale: string) => css`
     }
 
     a {
-        ${content(modularScale)}
+        ${content(ms)}
     }
 
     ul,
     ol {
-        ${content(modularScale)}
+        ${content(ms)}
 
         li {
             margin: 0;
@@ -109,12 +103,17 @@ const styles = (modularScale: string) => css`
     }
 
     blockquote {
-        ${content(modularScale)}
+        ${content(ms)}
         padding: 0;
         margin: 0;
 
+        p {
+            padding-bottom: 0;
+        }
+
         & > * {
-            margin-left: ${(props) => props.theme.rhythmSizing(2)}rem;;
+            margin-left: ${(props) =>
+                props.theme.rhythmSizing(getScale(ms, 2, 5))}rem;
         }
     }
 

@@ -1,42 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
-import { useWindowSize } from '../libs/useWindowResize';
 import { getBaseFontSize, RhythmTypography } from '../libs/rhythm';
-import { useTypography } from '../libs/useTypography';
+import { ThemeContext } from 'styled-components';
 
 interface CodeBlockProps {
     children: JSX.Element;
 }
 const RhythmCodeBlock = (props: CodeBlockProps) => {
-    const typography = useTypography();
-
-    const rhythmnHeight = typography?.rhythmHeight(1);
-    const size = useWindowSize();
+    const themeContext: { rhythmHeight: number } = useContext(ThemeContext);
     const [blockHeight, setBlockHeight] = useState<number | undefined>();
 
     const codeRef = useRef();
     useEffect(() => {
-        if (codeRef.current && typography) {
+        if (codeRef.current) {
             const blockHeight = (codeRef.current as any).firstElementChild
                 .firstElementChild.clientHeight;
             const baseFontSize = getBaseFontSize();
             const codeRhythmnHeight =
-                blockHeight / (rhythmnHeight * baseFontSize);
+                blockHeight / (themeContext.rhythmHeight * baseFontSize);
             const calculatedHeight =
-                Math.ceil(codeRhythmnHeight) * rhythmnHeight * baseFontSize;
+                Math.ceil(codeRhythmnHeight) *
+                themeContext.rhythmHeight *
+                baseFontSize;
             setBlockHeight(calculatedHeight);
         }
     });
 
-    if (typography === undefined) {
-        return null;
-    }
     return (
-        <CodeContainer
-            typography={typography}
-            height={blockHeight}
-            ref={codeRef}
-        >
+        <CodeContainer height={blockHeight} ref={codeRef}>
             {props.children}
         </CodeContainer>
     );
