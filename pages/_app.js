@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/globals.css';
-import '../styles/fonts.css';
 import '../styles/normalize.css';
-import { size } from '../styles/media';
-import { useWindowSize } from '../libs/useWindowResize';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styledComponentsRhythm from '@ceteio/styled-components-rhythm';
+
+const rhythm = styledComponentsRhythm({
+    baseFontSize: 1, // rem units.
+    defaultLineHeight: 1.5, // unitless line-height
+    rhythmHeight: 1, // rem units.
+    capHeights: {
+        // Calculated with https://codepen.io/sebdesign/pen/EKmbGL?editors=0011
+        Muli: 0.715,
+        'Fira Code': 0.69,
+        'Fjalla One': 0.87
+    },
+    debug: false
+});
 
 export const SizeContext = React.createContext('standard');
 
+const GlobalStyle = createGlobalStyle`
+  ${rhythm.global};
+`;
+
 const App = ({ Component, pageProps }) => {
-    const windowSize = useWindowSize();
-    const [mediaSize, setMediaSize] = useState('standard');
-
-    useEffect(() => {
-        if (windowSize.width < size.standard) {
-            setMediaSize('small');
-        } else if (windowSize.width < size.wide) {
-            setMediaSize('standard');
-        } else {
-            setMediaSize('wide');
-        }
-    }, [windowSize]);
-
     useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
@@ -30,9 +33,10 @@ const App = ({ Component, pageProps }) => {
     }, []);
 
     return (
-        <SizeContext.Provider value={mediaSize}>
+        <ThemeProvider theme={rhythm.theme}>
+            <GlobalStyle />
             <Component {...pageProps} />
-        </SizeContext.Provider>
+        </ThemeProvider>
     );
 };
 

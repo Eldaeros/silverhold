@@ -1,17 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { CssBaseline, Button } from '@material-ui/core';
-
-import posts from '../data/blog-posts';
 import { media } from '../styles/media';
-import { useTypography } from '../libs/useTypography';
+import { scale } from '../styles/blog';
 
 const Index = () => {
     useEffect(() => {
         document.title = 'Silverhold Studios';
     }, []);
-
-    const typography = useTypography();
 
     const blogsRef = useRef();
 
@@ -30,7 +26,7 @@ const Index = () => {
         <Background>
             <CssBaseline />
             <SplashImage image={'/images/lion_large.jpg'}>
-                <TitleContainer typography={typography}>
+                <TitleContainer>
                     <Header>
                         <Title>SILVERHOLD STUDIOS</Title>
                         <AuthorText>
@@ -143,23 +139,42 @@ const TitleContainer = styled.div`
 
     ${Header} {
         ${Title} {
-            ${({ typography }) => typography.verticalRhythm({ fontScale: 9 })}
-            margin: 32px 32px 8px 32px;
+            ${(props) =>
+                props.theme.setFontWithRhythm(
+                    'Fjalla One',
+                    scale['minorThird'](10)
+                )}
             text-align: center;
 
             ${media.small} {
-                ${({ typography }) =>
-                    typography.verticalRhythm({ fontScale: 8 })}
-                margin: 32px 0px 8px 0px;
+                ${(props) =>
+                    props.theme.setFontWithRhythm(
+                        'Fjalla One',
+                        scale['minorThird'](7)
+                    )}
             }
         }
 
         ${AuthorText} {
-            ${({ typography }) => typography.verticalRhythm({ fontScale: 2 })}
-            margin: 0px;
+            ${(props) =>
+                props.theme.setFontWithRhythm(
+                    'Fjalla One',
+                    scale['minorThird'](2)
+                )}
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
                 sans-serif;
+
+            ${media.small} {
+                ${(props) =>
+                    props.theme.setFontWithRhythm(
+                        'Fjalla One',
+                        scale['minorThird'](1)
+                    )}
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+                sans-serif;
+            }
 
             ${CreatedBy} {
                 color: rgb(255 255 255 / 60%);

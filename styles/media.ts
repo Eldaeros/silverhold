@@ -7,5 +7,5 @@ export const size = {
 export const media = {
     small: `@media (max-width: ${size.small}px)`,
     standard: `@media (max-width: ${size.standard}px)`,
-    wide: `@media (max-width: ${size.wide}px)`
+    wide: `@media (min-width: ${size.wide}px)`
 };

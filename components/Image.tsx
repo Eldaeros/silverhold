@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useWindowSize } from '../libs/useWindowResize';
 import { getBaseFontSize, RhythmTypography } from '../libs/rhythm';
 import { useTypography } from '../libs/useTypography';
-import styles from '../styles/base';
+import { content } from '../styles/blog';
+import { media } from '../styles/media';
 
 interface ImageProps extends React.ImgHTMLAttributes<any> {}
 const RhythmImage = (props: ImageProps) => {
@@ -41,11 +42,11 @@ const RhythmImage = (props: ImageProps) => {
     );
 };
 
-interface DescriptionProps {
-    rhythmTypography: RhythmTypography;
-}
 const Description = styled.div`
-    ${(props: DescriptionProps) => styles.content(props.rhythmTypography)};
+    ${content('minorThird')}
+    ${media.wide} {
+        ${content('majorThird')}
+    }
     margin-top: 0;
     text-align: center;
 `;
