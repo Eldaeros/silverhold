@@ -142,7 +142,7 @@ const TitleContainer = styled.div`
             ${(props) =>
                 props.theme.setFontWithRhythm(
                     'Fjalla One',
-                    scale['minorThird'](10)
+                    scale['minorThird'](props.theme.baseFontSize, 10)
                 )}
             text-align: center;
 
@@ -150,7 +150,7 @@ const TitleContainer = styled.div`
                 ${(props) =>
                     props.theme.setFontWithRhythm(
                         'Fjalla One',
-                        scale['minorThird'](7)
+                        scale['minorThird'](props.theme.baseFontSize, 7)
                     )}
             }
         }
@@ -159,7 +159,7 @@ const TitleContainer = styled.div`
             ${(props) =>
                 props.theme.setFontWithRhythm(
                     'Fjalla One',
-                    scale['minorThird'](2)
+                    scale['minorThird'](props.theme.baseFontSize, 2)
                 )}
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
@@ -169,7 +169,7 @@ const TitleContainer = styled.div`
                 ${(props) =>
                     props.theme.setFontWithRhythm(
                         'Fjalla One',
-                        scale['minorThird'](1)
+                        scale['minorThird'](props.theme.baseFontSize, 1)
                     )}
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',

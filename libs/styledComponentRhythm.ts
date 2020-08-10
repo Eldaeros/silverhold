@@ -1,3 +1,5 @@
+// Originally from https://github.com/ceteio/styled-components-rhythm
+
 const styledComponentsRhythm = ({
     baseFontSize,
     defaultLineHeight,
@@ -62,6 +64,7 @@ const styledComponentsRhythm = ({
     return {
         theme: {
             rhythmHeight,
+            baseFontSize,
             setFontWithRhythm(fontName, fontSizeRem, desiredLineHeight) {
                 const lineHeight = rhythmLineHeight(
                     fontName,

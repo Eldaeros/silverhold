@@ -1,11 +1,11 @@
 export const size = {
-    small: 768,
-    standard: 992,
-    wide: 1200
+    small: 0,
+    standard: 640,
+    wide: 1280
 };
 
 export const media = {
-    small: `@media (max-width: ${size.small}px)`,
-    standard: `@media (max-width: ${size.standard}px)`,
+    small: `@media (min-width: 0px)`,
+    standard: `@media (min-width: ${size.standard}px)`,
     wide: `@media (min-width: ${size.wide}px)`
 };
