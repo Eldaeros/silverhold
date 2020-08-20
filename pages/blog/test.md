@@ -2,7 +2,7 @@
 layout: post
 title: Sample Post 2
 summary: This is a sample blog post using .md format
-banner: /images/truffles.jpg
+banner: /images/sample3.jpg
 publishedAt: 2020-07-31
 ---
 

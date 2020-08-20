@@ -1,30 +1,29 @@
-import { css } from 'styled-components';
-import { msFunction } from '../libs/modularScale';
+import { css } from "styled-components";
+import { msFunction } from "../libs/modularScale";
 
 export const scale = {
     minorThird: (base, idx) =>
         msFunction(idx, {
             base,
-            ratio: 1.2
+            ratio: 1.2,
         }),
     majorThird: (base, idx) =>
         msFunction(idx, {
             base,
-            ratio: 1.25
-        })
+            ratio: 1.25,
+        }),
 };
 
 const getScale = (ms, minor: number, major: number) => {
-    return ms === 'minorThird' ? minor : major;
+    return ms === "minorThird" ? minor : major;
 };
 
 export const content = (ms: string) => css`
     margin: 0;
     ${(props) =>
         props.theme.setFontWithRhythm(
-            'Muli',
+            "Muli",
             scale[ms](props.theme.baseFontSize, 2),
-            getScale(ms, 1, 1.5)
         )};
     padding-bottom: ${(props) => props.theme.rhythmSizing(2)}rem;
 `;
@@ -37,8 +36,8 @@ const styles = (ms: string) => css`
     h1 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 7)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 7),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
@@ -46,40 +45,40 @@ const styles = (ms: string) => css`
     h2 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 6)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 6),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h3 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 5)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 5),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h4 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 4)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 4),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h5 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 3)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 3),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
     h6 {
         ${(props) =>
             props.theme.setFontWithRhythm(
-                'Muli',
-                scale[ms](props.theme.baseFontSize, 2)
+                "Muli",
+                scale[ms](props.theme.baseFontSize, 2),
             )}
         padding-bottom: ${(props) => props.theme.rhythmSizing(1)}rem;
     }
@@ -90,8 +89,8 @@ const styles = (ms: string) => css`
         code {
             ${(props) =>
                 props.theme.setFontWithRhythm(
-                    'Fira Code',
-                    scale[ms](props.theme.baseFontSize, 1)
+                    "Fira Code",
+                    scale[ms](props.theme.baseFontSize, 1),
                 )};
             padding: 0;
             display: inline-block;
@@ -107,7 +106,7 @@ const styles = (ms: string) => css`
         box-sizing: content-box;
         code {
             ${(props) =>
-                props.theme.setFontWithRhythm('Fira Code', scale[ms](1))};
+                props.theme.setFontWithRhythm("Fira Code", scale[ms](1))};
             margin-left: ${(props) => props.theme.rhythmSizing(2)}rem;
             padding: ${(props) => props.theme.rhythmSizing(2)}rem 0;
             display: inline-block;

@@ -1,8 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { CssBaseline, Button } from '@material-ui/core';
+import {
+    CssBaseline,
+    Button,
+    Container as MaterialContainer,
+    Grid as MaterialGrid,
+    AppBar,
+    Toolbar as MaterialToolbar,
+    Tabs as MaterialTabs,
+    Tab as MaterialTab,
+    Box,
+    Typography
+} from '@material-ui/core';
 import { media } from '../styles/media';
 import { scale } from '../styles/blog';
+import posts from '../data/blog-posts';
+import BlogCard from '../components/BlogCard';
 
 const Index = () => {
     useEffect(() => {
@@ -22,6 +35,12 @@ const Index = () => {
         });
     };
 
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
         <Background>
             <CssBaseline />
@@ -36,7 +55,6 @@ const Index = () => {
                     </Header>
                     <Footer>
                         <Logo />
-
                         <ButtonContainer>
                             <StyledButton
                                 onClick={() => {
@@ -64,37 +82,108 @@ const Index = () => {
                 </TitleContainer>
             </SplashImage>
             <Transition />
-            <div ref={blogsRef}></div>
+            <AppBar position="sticky">
+                <Toolbar variant="dense">
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="secondary"
+                        textColor="secondary"
+                    >
+                        <Tab label="Articles" />
+                        <Tab label="About" />
+                        <Tab label="Projects" disabled />
+                    </Tabs>
+                </Toolbar>
+            </AppBar>
+            <TabPanel value={value} index={0}>
+                <Region background="white">
+                    <div ref={blogsRef}></div>
 
-            {/* <Container maxWidth="md">
-                <Grid container spacing={2}>
-                    {posts.map((post, index) => (
-                        <Grid key={index} item xs={12} sm={6}>
-                            <ArticleCard {...post} />
+                    <Container maxWidth="lg">
+                        <Grid container spacing={2}>
+                            {posts.map((post, index) => (
+                                <GridItem
+                                    key={index}
+                                    item
+                                    xs={12}
+                                    sm={6}
+                                    lg={4}
+                                >
+                                    <BlogCard {...post} />
+                                </GridItem>
+                            ))}
                         </Grid>
-                    ))}
-                </Grid>
-                <span>
-                    Photo by{' '}
-                    <a href="https://unsplash.com/@mattkerslake?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
-                        Matthew Kerslake
-                    </a>{' '}
-                    on{' '}
-                    <a href="https://unsplash.com/s/photos/lion?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
-                        Unsplash
-                    </a>
-                </span>
-            </Container> */}
+                        <span>
+                            Photo by{' '}
+                            <a href="https://unsplash.com/@mattkerslake?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                                Matthew Kerslake
+                            </a>{' '}
+                            on{' '}
+                            <a href="https://unsplash.com/s/photos/lion?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">
+                                Unsplash
+                            </a>
+                        </span>
+                    </Container>
+                </Region>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                <Region background="white"></Region>
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                <Region background="white"></Region>
+            </TabPanel>
         </Background>
     );
 };
 
-const Background = styled.div`
-    background-color: #101010;
-    background-position: -1px 0;
-    background-size: 1em 1em;
-    height: 100vh;
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+const Toolbar = styled(MaterialToolbar)`
+    background-color: #464953;
 `;
+
+const Tab = styled(MaterialTab)``;
+const Tabs = styled(MaterialTabs)`
+    ${Tab} {
+        &.Mui-selected {
+            background-color: #2c2d33;
+        }
+
+        ${(props) =>
+            props.theme.setFontWithRhythm(
+                'Muli',
+                scale['minorThird'](props.theme.baseFontSize, 2)
+            )}
+        color: #f0f0f0;
+        text-transform: none;
+    }
+
+    & .MuiTabs-indicator {
+        /* TODO: Implement arrow pointer */
+        display: none;
+    }
+`;
+
+const Background = styled.div``;
 
 interface SplashImageProps {
     image: string;
@@ -142,7 +231,7 @@ const TitleContainer = styled.div`
             ${(props) =>
                 props.theme.setFontWithRhythm(
                     'Fjalla One',
-                    scale['minorThird'](props.theme.baseFontSize, 10)
+                    scale['minorThird'](props.theme.baseFontSize, 7)
                 )}
             text-align: center;
 
@@ -150,7 +239,7 @@ const TitleContainer = styled.div`
                 ${(props) =>
                     props.theme.setFontWithRhythm(
                         'Fjalla One',
-                        scale['minorThird'](props.theme.baseFontSize, 7)
+                        scale['minorThird'](props.theme.baseFontSize, 10)
                     )}
             }
         }
@@ -159,7 +248,7 @@ const TitleContainer = styled.div`
             ${(props) =>
                 props.theme.setFontWithRhythm(
                     'Fjalla One',
-                    scale['minorThird'](props.theme.baseFontSize, 2)
+                    scale['minorThird'](props.theme.baseFontSize, 1)
                 )}
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
@@ -169,7 +258,7 @@ const TitleContainer = styled.div`
                 ${(props) =>
                     props.theme.setFontWithRhythm(
                         'Fjalla One',
-                        scale['minorThird'](props.theme.baseFontSize, 1)
+                        scale['minorThird'](props.theme.baseFontSize, 2)
                     )}
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
                 Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
@@ -195,7 +284,7 @@ const TitleContainer = styled.div`
         margin: 32px;
 
         ${Logo} {
-            display: block;
+            display: none;
             height: 100px;
             width: 100px;
             background-size: 70%;
@@ -208,21 +297,23 @@ const TitleContainer = styled.div`
             align-self: center;
 
             ${media.small} {
-                display: none;
+                display: block;
             }
         }
 
         ${ButtonContainer} {
+            display: flex;
+            flex-direction: column;
             > * {
-                margin: 0px 8px;
+                margin: 8px 0px;
+                width: 180px;
             }
 
             ${media.small} {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 > * {
-                    margin: 8px 0px;
-                    width: 180px;
+                    margin: 0px 8px;
                 }
             }
         }
@@ -232,6 +323,31 @@ const TitleContainer = styled.div`
 const Transition = styled.div`
     height: 100px;
     background-color: black;
+`;
+
+const Container = styled(MaterialContainer)`
+    && {
+        padding: ${(props) => props.theme.rhythmSizing(2)}rem;
+    }
+`;
+
+const GridItem = styled(MaterialGrid)``;
+const Grid = styled(MaterialGrid)`
+    /* && {
+        margin: 0;
+        padding: 0;
+        row-gap: ${(props) => props.theme.rhythmSizing(2)}rem;
+    } */
+
+    & ${GridItem} {
+        margin: 0;
+        padding: ${(props) => props.theme.rhythmSizing(2)}rem;
+    }
+`;
+
+const Region = styled.div`
+    background-color: ${(props: { background }) => props.background};
+    min-height: 100vh;
 `;
 
 const StyledButton = styled(Button)`

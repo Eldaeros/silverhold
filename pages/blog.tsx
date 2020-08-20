@@ -63,7 +63,7 @@ const Blog = (props: BlogProps) => {
 
 const StyleWrapper = styled.div`
     ${styles('minorThird')}
-    ${media.wide} {
+    ${media.large} {
         ${styles('majorThird')}
     }
 `;

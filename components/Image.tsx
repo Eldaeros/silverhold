@@ -41,7 +41,7 @@ const RhythmImage = (props: ImageProps) => {
 
 const Description = styled.div`
     ${content('minorThird')}
-    ${media.wide} {
+    ${media.large} {
         ${content('majorThird')}
     }
     margin-top: 0;
